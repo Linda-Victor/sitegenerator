@@ -1,6 +1,6 @@
 import unittest
 
-from textnode import TextNode, TextType
+from textnode import *
 
 
 class TestTextNode(unittest.TestCase):
@@ -16,6 +16,16 @@ class TestTextNode(unittest.TestCase):
         node = TextNode("They're taking the hobbits to isengard", TextType.BOLD)
         node2 = TextNode("They're taking the hobbits to insergrad", TextType.BOLD)
         self.assertNotEqual(node, node2)
+
+    def test_text(self):
+        node = TextNode("This is a text node", TextType.TEXT)
+        html_node = text_node_to_html_node(node)
+        self.assertEqual(html_node.tag, None)
+        self.assertEqual(html_node.value, "This is a text node")
+    def test_text_not_in_enum(self):
+        node = TextNode('ta errado', 'CARECA')
+        with self.assertRaises(Exception):
+            text_node_to_html_node(node)
 
 if __name__ == "__main__":
     unittest.main()
