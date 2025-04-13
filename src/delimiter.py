@@ -1,6 +1,13 @@
 from textnode import TextType, TextNode
 import re
 
+def text_to_textnodes(text):
+    node = [TextNode(text, TextType.TEXT)]
+    first_delimiters = split_nodes_delimiter(split_nodes_delimiter(split_nodes_delimiter(node, "**", TextType.BOLD), "_", TextType.ITALIC), "`", TextType.CODE)
+    new_nodes = split_nodes_link(split_nodes_image(first_delimiters))
+    return new_nodes
+
+
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     new_nodes = []
     delimiters = ['**', '_', '`']
@@ -85,13 +92,6 @@ def split_nodes_link(old_nodes):
             else:
                 sections.append(this_section[1])
     return new_nodes
-
-def text_to_textnodes(text):
-    node = [TextNode(text, TextType.TEXT)]
-    first_delimiters = split_nodes_delimiter(split_nodes_delimiter(split_nodes_delimiter(node, "**", TextType.BOLD), "_", TextType.ITALIC), "`", TextType.CODE)
-    new_nodes = split_nodes_link(split_nodes_image(first_delimiters))
-    return new_nodes
-
 
 def extract_markdown_images(text):
     text_and_url = re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
