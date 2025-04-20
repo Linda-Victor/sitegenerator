@@ -3,6 +3,10 @@ import unittest
 from textnode import *
 
 class TestTextNode(unittest.TestCase):
+    def test_chico(self):
+        chico = TextNode('É a que diz bad motherfucker', TextType.LINK, 'https://www.youtube.com/watch?v=NUuwd8Z0l_4')
+        self.assertEqual(repr(chico), f'TextNode(É a que diz bad motherfucker, TextType.LINK, https://www.youtube.com/watch?v=NUuwd8Z0l_4)')
+
     def test_eq(self):
         node = TextNode("This is a text node", TextType.BOLD)
         node2 = TextNode("This is a text node", TextType.BOLD)
